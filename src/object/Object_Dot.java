@@ -9,7 +9,7 @@ public class Object_Dot extends SuperObject {
     
     public Object_Dot(){
 
-        String name = "dot";
+        this.name = "dot";
 
         try {
             image = ImageIO.read(new FileInputStream("src/res/objects/dot.png"));

@@ -5,7 +5,13 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 
+    Pacman pm;
+
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+
+    public KeyHandler(Pacman pm){
+        this.pm = pm;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -18,17 +24,25 @@ public class KeyHandler implements KeyListener{
         
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_W){
+        if(code == KeyEvent.VK_UP){
             upPressed = true;
         }
-        if(code == KeyEvent.VK_S){
+        if(code == KeyEvent.VK_DOWN){
             downPressed = true;
         }
-        if(code == KeyEvent.VK_A){
+        if(code == KeyEvent.VK_LEFT){
             leftPressed = true;
         }
-        if(code == KeyEvent.VK_D){
+        if(code == KeyEvent.VK_RIGHT){
             rightPressed = true;
+        }
+        if(code == KeyEvent.VK_P){
+            if(pm.gameState == pm.playState){
+                pm.gameState = pm.pauseState;
+            } else if(pm.gameState == pm.pauseState){
+                pm.gameState = pm.playState;
+
+            }
         }
         
     }
@@ -38,18 +52,18 @@ public class KeyHandler implements KeyListener{
         
         int code = e.getKeyCode();
         
-        if(code == KeyEvent.VK_W){
+        if(code == KeyEvent.VK_UP){
             upPressed = false;
         }
-        if(code == KeyEvent.VK_S){
+        if(code == KeyEvent.VK_DOWN){
             downPressed = false;
         }
-        if(code == KeyEvent.VK_A){
+        if(code == KeyEvent.VK_LEFT){
             leftPressed = false;
         }
-        if(code == KeyEvent.VK_D){
+        if(code == KeyEvent.VK_RIGHT){
             rightPressed = false;
-        }
+        } 
     }
     
 }

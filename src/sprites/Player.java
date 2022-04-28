@@ -14,12 +14,13 @@ import javax.imageio.ImageIO;
 
 public class Player extends Sprites {
 
-    Pacman pm;
     KeyHandler keyH;
+
+    public int score;
 
     public Player(Pacman pm, KeyHandler keyH) {
 
-        this.pm = pm;
+        super(pm);
         this.keyH = keyH;
 
         solidArea = new Rectangle();
@@ -78,8 +79,10 @@ public class Player extends Sprites {
         collisionOn = false;
         pm.collisionCheck.checkTile(this);
 
-        //CHECK OBJECT COLLISION 
-        // int objIndex = pm.collisionCheck.checkObject(this, true);
+        //Check for object collision
+         int objectIndex = pm.collisionCheck.checkObject(this, true);
+         collectObject(objectIndex);
+
         // IF NO COLLISION PLAYER CAN MOVE
         if (collisionOn == false) {
 
@@ -109,6 +112,31 @@ public class Player extends Sprites {
             spriteCounter = 0;
         }
     }
+
+public void collectObject(int i){
+ if(i != 999){
+
+    // pm.obj[i] = null; 
+
+    String objectName = pm.obj[i].name;
+
+    switch(objectName){
+        case "dot":
+        score++;
+        pm.obj[i] = null; 
+        System.out.println("Score: "+score);
+        if(score == 2){
+            pm.sc.levelCompleted = true;
+        }
+        break;
+        case "potion":
+        //turns npcs blue and edible
+        pm.obj[i] = null; 
+        break;
+    }
+
+ }
+}
 
     public void draw(Graphics2D g2) {
 

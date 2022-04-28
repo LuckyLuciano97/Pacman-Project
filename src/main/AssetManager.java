@@ -3,6 +3,7 @@ package main;
 import object.Object_Dot;
 import object.Object_Potion;
 import object.SuperObject;
+import sprites.Ghost;
 
 public class AssetManager {
 
@@ -26,6 +27,13 @@ public class AssetManager {
         pm.obj[2].mapY = 9 * pm.tileSize;
 
 
+
+    }
+
+    public void setNPC(){
+        pm.npc[0] = new Ghost(pm);
+        pm.npc[0].mapX = pm.tileSize*1;
+        pm.npc[0].mapY = pm.tileSize*10;
 
     }
 }

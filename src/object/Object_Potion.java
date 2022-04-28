@@ -8,7 +8,7 @@ public class Object_Potion extends SuperObject{
 
     public Object_Potion(){
 
-        String name = "potion";
+        this.name = "potion";
 
         try {
             image = ImageIO.read(new FileInputStream("src/res/objects/potion.png"));

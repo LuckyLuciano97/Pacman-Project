@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 
 import object.SuperObject;
 import sprites.Player;
+import sprites.Sprites;
 import tile.TileManager;
 import java.awt.Graphics;
 import java.awt.*;
@@ -28,12 +29,19 @@ public class Pacman extends JPanel implements Runnable {
    int FPS = 60;
 
    TileManager tileM = new TileManager(this);
-   KeyHandler keyH = new KeyHandler();
+   KeyHandler keyH = new KeyHandler(this);
    Thread gameThread;
    public CollisionCheck collisionCheck = new CollisionCheck(this);
    public AssetManager assetManager = new AssetManager(this);
+   public Score sc= new Score(this);
    public Player player = new Player(this,keyH);
    public SuperObject obj[] = new SuperObject[10];
+   public Sprites npc[] = new Sprites[10];
+
+   //For pausing and resuming the game
+   public int gameState;
+   public final int playState = 1;
+   public final int pauseState = 2;
 
    public Pacman() {
       this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -46,6 +54,8 @@ public class Pacman extends JPanel implements Runnable {
    public void setAssets(){
 
       assetManager.setObject();
+      assetManager.setNPC();
+      gameState = playState;
    }
 
    public void startGameThread() {
@@ -87,7 +97,19 @@ public class Pacman extends JPanel implements Runnable {
 
    public void update() {
 
-player.update();
+      if(gameState == playState){
+         player.update();
+         for(int i = 0; i < npc.length; i++){
+            if(npc[i] != null){
+               npc[i].update();
+            }
+         }
+
+      } 
+      if(gameState == pauseState){
+
+      }
+
 
    }
 
@@ -103,8 +125,17 @@ player.update();
             obj[i].draw(g2, this);
          }
       }
+      //NPC 
+      for(int i = 0;i < npc.length;i++){
+         if(npc[i] != null){
+            npc[i].draw(g2);
+         }
+      }
       //Player
       player.draw(g2);
+
+      //UI
+      sc.draw(g2);
 
       g2.dispose();
 
