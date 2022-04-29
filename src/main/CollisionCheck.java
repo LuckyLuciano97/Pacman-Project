@@ -135,4 +135,94 @@ public class CollisionCheck {
 
         return index;
     }
+    public int checkSprite(Sprites sprite, Sprites[] target){
+        int index = 999;
+
+        for (int i = 0; i < target.length; i++) {
+            if (target[i] != null) {
+
+                sprite.solidArea.x = sprite.mapX + sprite.solidArea.x;
+                sprite.solidArea.y = sprite.mapY + sprite.solidArea.y;
+
+                target[i].solidArea.x = target[i].mapX + target[i].solidArea.x;
+                target[i].solidArea.y = target[i].mapY + target[i].solidArea.y;
+
+                switch (sprite.direction) {
+                    case "up":
+                        sprite.solidArea.y -= sprite.speed;
+                        if (sprite.solidArea.intersects(target[i].solidArea)) {
+                                sprite.collisionOn = true;
+                                index = i;
+                            }
+                        break;
+                    case "down":
+                        sprite.solidArea.y += sprite.speed;
+                        if (sprite.solidArea.intersects(target[i].solidArea)) {
+                                sprite.collisionOn = true;
+                                index = i;
+                            }
+                        break;
+                    case "left":
+                        sprite.solidArea.x -= sprite.speed;
+                        if (sprite.solidArea.intersects(target[i].solidArea)) {
+                                sprite.collisionOn = true;
+                                index = i;
+                            }
+                        break;
+                    case "right":
+                        sprite.solidArea.x += sprite.speed;
+                        if (sprite.solidArea.intersects(target[i].solidArea)) {                   
+                                sprite.collisionOn = true;
+                                index = i;
+                            
+                            break;
+                        }
+                }
+                sprite.solidArea.x = sprite.solidAreaDefaultX;
+                sprite.solidArea.y = sprite.solidAreaDefaultY;
+                target[i].solidArea.x = target[i].solidAreaDefaultX;
+                target[i].solidArea.y = target[i].solidAreaDefaultY;
+            }
+        }
+
+        return index;
+    }
+    public void checkPlayer(Sprites sprite){
+                sprite.solidArea.x = sprite.mapX + sprite.solidArea.x;
+                sprite.solidArea.y = sprite.mapY + sprite.solidArea.y;
+
+                pm.player.solidArea.x = pm.player.mapX + pm.player.solidArea.x;
+                pm.player.solidArea.y = pm.player.mapY + pm.player.solidArea.y;
+
+                switch (sprite.direction) {
+                    case "up":
+                        sprite.solidArea.y -= sprite.speed;
+                        if (sprite.solidArea.intersects(pm.player.solidArea)) {
+                                sprite.collisionOn = true;
+                            }
+                        break;
+                    case "down":
+                        sprite.solidArea.y += sprite.speed;
+                        if (sprite.solidArea.intersects(pm.player.solidArea)) {
+                                sprite.collisionOn = true;
+                            }
+                        break;
+                    case "left":
+                        sprite.solidArea.x -= sprite.speed;
+                        if (sprite.solidArea.intersects(pm.player.solidArea)) {
+                                sprite.collisionOn = true;
+                            }
+                        break;
+                    case "right":
+                        sprite.solidArea.x += sprite.speed;
+                        if (sprite.solidArea.intersects(pm.player.solidArea)) {                   
+                                sprite.collisionOn = true;
+                            break;
+                        }
+                }
+                sprite.solidArea.x = sprite.solidAreaDefaultX;
+                sprite.solidArea.y = sprite.solidAreaDefaultY;
+                pm.player.solidArea.x = pm.player.solidAreaDefaultX;
+                pm.player.solidArea.y = pm.player.solidAreaDefaultY;
+    }
 }

@@ -42,6 +42,8 @@ public class Sprites {
 
         collisionOn = false;
         pm.collisionCheck.checkTile(this);
+        pm.collisionCheck.checkPlayer(this);   
+             
 
             // IF NO COLLISION PLAYER CAN MOVE
             if (collisionOn == false) {

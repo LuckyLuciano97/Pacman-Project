@@ -40,6 +40,7 @@ public class Pacman extends JPanel implements Runnable {
 
    //For pausing and resuming the game
    public int gameState;
+   public final int titleState = 0;
    public final int playState = 1;
    public final int pauseState = 2;
 
@@ -55,7 +56,7 @@ public class Pacman extends JPanel implements Runnable {
 
       assetManager.setObject();
       assetManager.setNPC();
-      gameState = playState;
+      gameState = titleState;
    }
 
    public void startGameThread() {
@@ -116,7 +117,11 @@ public class Pacman extends JPanel implements Runnable {
    public void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D)g;
-     
+
+      //starting title screen
+      if(gameState == titleState){
+         sc.draw(g2);
+      } else{
       //Tiles
       tileM.draw(g2);
       //Object
@@ -134,8 +139,11 @@ public class Pacman extends JPanel implements Runnable {
       //Player
       player.draw(g2);
 
-      //UI
-      sc.draw(g2);
+      //score
+      sc.draw(g2); 
+      }
+     
+
 
       g2.dispose();
 

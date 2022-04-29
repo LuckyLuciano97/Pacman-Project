@@ -83,6 +83,10 @@ public class Player extends Sprites {
          int objectIndex = pm.collisionCheck.checkObject(this, true);
          collectObject(objectIndex);
 
+         //Check if npc is coliding
+         int npcIndex = pm.collisionCheck.checkSprite(this, pm.npc);
+         npcInteraction(npcIndex);
+
         // IF NO COLLISION PLAYER CAN MOVE
         if (collisionOn == false) {
 
@@ -137,6 +141,13 @@ public void collectObject(int i){
 
  }
 }
+
+public void npcInteraction(int i){
+ if(i != 999){
+
+ }
+}
+
 
     public void draw(Graphics2D g2) {
 
