@@ -9,6 +9,7 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 
 import main.Pacman;
+import object.Object_Dot;
 
 public class TileManager {
     
@@ -20,7 +21,7 @@ public class TileManager {
 
         this.pm = pm;
 
-        tile = new Tile[12];
+        tile = new Tile[14];
         mazeTileNum = new int[pm.maxScreenCol][pm.maxScreenRow];
 
         getTileImage();
@@ -33,6 +34,9 @@ public class TileManager {
 
         tile[0] = new Tile();
         tile[0].image = ImageIO.read(new FileInputStream("src/res/tiles/blue_tile.png"));
+
+        tile[12] = new Tile();
+        tile[12].image = ImageIO.read(new FileInputStream("src/res/tiles/blue_tile.png"));
 
         tile[1] = new Tile();
         tile[1].image = ImageIO.read(new FileInputStream("src/res/tiles/tile_horizontal.png"));
@@ -70,9 +74,9 @@ public class TileManager {
         tile[9].image = ImageIO.read(new FileInputStream("src/res/tiles/tilecorners_bottom_right.png"));
         tile[9].collision = true;
 
-        tile[10] = new Tile();
-        tile[10].image = ImageIO.read(new FileInputStream("src/res/tiles/tilecorners_bottom_left.png"));
-        tile[10].collision = true;
+        tile[13] = new Tile();
+        tile[13].image = ImageIO.read(new FileInputStream("src/res/tiles/tilecorners_bottom_left.png"));
+        tile[13].collision = true;
 
         tile[11] = new Tile();
         tile[11].image = ImageIO.read(new FileInputStream("src/res/tiles/tilecorners_cross.png"));
@@ -98,7 +102,7 @@ public void loadMaze(String filePath){
                 String numbers[] = line.split(" ");
 
                 int num = Integer.parseInt(numbers[col]);
-
+                System.out.println(num);
                 mazeTileNum[col][row] = num;
                 col++;
             }

@@ -2,6 +2,8 @@ package sprites;
 
 import main.Pacman;
 import main.KeyHandler;
+import main.Main;
+
 import java.awt.*;
 import java.awt.Rectangle;
 
@@ -24,12 +26,12 @@ public class Player extends Sprites {
         this.keyH = keyH;
 
         solidArea = new Rectangle();
-        solidArea.x = 16;
-        solidArea.y = 16;
+        solidArea.x = 32;
+        solidArea.y = 28;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 16;
-        solidArea.height = 16;
+        solidArea.width = 24;
+        solidArea.height = 20;
 
 
         setDefaultValues();
@@ -42,6 +44,7 @@ public class Player extends Sprites {
         mapY = 40;
         speed = 2;
         direction = "down";
+        
 
     }
 
@@ -86,6 +89,7 @@ public class Player extends Sprites {
          //Check if npc is coliding
          int npcIndex = pm.collisionCheck.checkSprite(this, pm.npc);
          npcInteraction(npcIndex);
+         
 
         // IF NO COLLISION PLAYER CAN MOVE
         if (collisionOn == false) {
@@ -126,16 +130,17 @@ public void collectObject(int i){
 
     switch(objectName){
         case "dot":
-        score++;
+        score += 100;
         pm.obj[i] = null; 
         System.out.println("Score: "+score);
-        if(score == 2){
+        if(score == pm.assetManager.numOfDots * 100){
             pm.sc.levelCompleted = true;
         }
         break;
         case "potion":
-        //turns npcs blue and edible
         pm.obj[i] = null; 
+        speed = 4;
+        pm.timePassed = 0;
         break;
     }
 
@@ -144,8 +149,8 @@ public void collectObject(int i){
 
 public void npcInteraction(int i){
  if(i != 999){
-
- }
+    pm.sc.ghostAttack = true;
+}
 }
 
 
@@ -191,6 +196,9 @@ public void npcInteraction(int i){
                 break;
         }
         g2.drawImage(image, mapX, mapY, pm.playerSize, pm.playerSize, null);
-    }
+        g2.setColor(Color.red);
+        g2.drawRect(mapX + solidArea.x, mapY + solidArea.y,solidArea.width,solidArea.height);
+    } 
+    
 
 }

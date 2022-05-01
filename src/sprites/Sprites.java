@@ -20,6 +20,10 @@ public class Sprites {
     public boolean collisionOn = false;
     public int actionLimitCounter = 0;
 
+    //Chances available
+    // public int maxLife;
+    // public int life;
+
     public Sprites(Pacman pm){
         this.pm = pm;
 
@@ -28,8 +32,8 @@ public class Sprites {
         solidArea.y = 16;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 16;
-        solidArea.height = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
     }
 
     public void setAction() {
@@ -37,13 +41,11 @@ public class Sprites {
     }
 
     public void update() {
-
         setAction();
 
         collisionOn = false;
         pm.collisionCheck.checkTile(this);
         pm.collisionCheck.checkPlayer(this);   
-             
 
             // IF NO COLLISION PLAYER CAN MOVE
             if (collisionOn == false) {

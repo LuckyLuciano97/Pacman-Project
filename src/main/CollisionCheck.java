@@ -188,6 +188,7 @@ public class CollisionCheck {
         return index;
     }
     public void checkPlayer(Sprites sprite){
+
                 sprite.solidArea.x = sprite.mapX + sprite.solidArea.x;
                 sprite.solidArea.y = sprite.mapY + sprite.solidArea.y;
 
@@ -199,24 +200,37 @@ public class CollisionCheck {
                         sprite.solidArea.y -= sprite.speed;
                         if (sprite.solidArea.intersects(pm.player.solidArea)) {
                                 sprite.collisionOn = true;
+                                System.out.println("collision");
+                                pm.sc.ghostAttack = true;
+
                             }
                         break;
                     case "down":
                         sprite.solidArea.y += sprite.speed;
                         if (sprite.solidArea.intersects(pm.player.solidArea)) {
                                 sprite.collisionOn = true;
+                                System.out.println("collision");
+                                pm.sc.ghostAttack = true;
+
                             }
                         break;
                     case "left":
                         sprite.solidArea.x -= sprite.speed;
                         if (sprite.solidArea.intersects(pm.player.solidArea)) {
                                 sprite.collisionOn = true;
+                                System.out.println("collision");
+                                pm.sc.ghostAttack = true;
+
                             }
+
                         break;
                     case "right":
                         sprite.solidArea.x += sprite.speed;
                         if (sprite.solidArea.intersects(pm.player.solidArea)) {                   
                                 sprite.collisionOn = true;
+                                System.out.println("collision");
+                                pm.sc.ghostAttack = true;
+
                             break;
                         }
                 }

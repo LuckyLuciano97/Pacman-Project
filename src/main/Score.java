@@ -6,14 +6,21 @@ import java.awt.*;
 
 import java.awt.Graphics2D;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
+
 public class Score {
 
     Pacman pm;
     Graphics2D g2;
-    Font arial_25, arial_40B;
+    Font Arial;
+    Font arial_25;
+    public Font arial_40B;
     public boolean levelCompleted = false;
     public int commandNum = 0;
     public int titleScreenState = 0; // 0: first screen, 1: secondscreen
+    public boolean ghostAttack = false;
 
     public Score(Pacman pm){
      
@@ -25,7 +32,35 @@ public class Score {
 
     public void draw(Graphics2D g2){
         this.g2 = g2;
+        if(ghostAttack == true){
 
+            String text;
+            int textLength;
+            int x;
+            int y;
+
+            g2.setFont(arial_40B);
+            g2.setColor(Color.YELLOW);
+            text = "YOU DIED";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = pm.screenWidth/2 - textLength/2;
+            y = pm.screenHeight/2 - (pm.tileSize*3);
+            g2.drawString(text, x, y);
+
+        
+            
+            text = "Restart the game and try again";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+            x = pm.screenWidth/2 - textLength/2;
+            y = pm.screenHeight/2 + (pm.tileSize*2);
+            g2.drawString(text, x, y);
+
+            pm.gameThread = null;
+
+            
+
+        }
         if(levelCompleted == true){
 
             String text;
@@ -34,7 +69,7 @@ public class Score {
             int y;
 
             g2.setFont(arial_40B);
-            g2.setColor(Color.BLACK);
+            g2.setColor(Color.YELLOW);
             text = "You have completed the level";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
@@ -51,9 +86,6 @@ public class Score {
             g2.drawString(text, x, y);
 
             pm.gameThread = null;
-
-            
-            
 
         } else{
 
@@ -89,7 +121,7 @@ public class Score {
             //pacman image
             x = pm.screenWidth/2 - (pm.tileSize*4)/2;
             y += pm.tileSize;
-            g2.drawImage(pm.player.right, x, y, pm.playerSize*4, pm.playerSize*4, null);
+            g2.drawImage(pm.player.right, x, y, pm.tileSize*4, pm.tileSize*4, null);
     
             //Menu
             g2.setFont(g2.getFont().deriveFont(Font.BOLD,42F));
@@ -145,12 +177,12 @@ public class Score {
             y += pm.tileSize;
             g2.drawString(text, x, y);
 
-            text = "Collect the special potion to defeat the ghosts";
+            text = "Collect the special potion for an extra boost";
             x = getXforCenter(text);
             y += pm.tileSize;
             g2.drawString(text, x, y);
 
-            text = "PRESS THE SPACE BUTTON TO START THE GAME";
+            text = "PRESS THE SPACEBAR TO START THE GAME";
             x = getXforCenter(text);
             y += pm.tileSize*2;
             g2.drawString(text, x, y);

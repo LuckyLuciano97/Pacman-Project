@@ -19,7 +19,7 @@ public class Pacman extends JPanel implements Runnable {
    public final int scale = 3;
 
    public final int tileSize = startingTileSize * scale;
-   public final int playerSize = startingTileSize * scale;
+   public final int playerSize = startingTileSize * 5;
    public final int maxScreenCol = 16;
    public final int maxScreenRow = 12;
    public final int screenWidth = tileSize * maxScreenCol;
@@ -30,13 +30,15 @@ public class Pacman extends JPanel implements Runnable {
 
    TileManager tileM = new TileManager(this);
    KeyHandler keyH = new KeyHandler(this);
-   Thread gameThread;
+   public Thread gameThread;
    public CollisionCheck collisionCheck = new CollisionCheck(this);
    public AssetManager assetManager = new AssetManager(this);
    public Score sc= new Score(this);
    public Player player = new Player(this,keyH);
-   public SuperObject obj[] = new SuperObject[10];
+   public SuperObject obj[] = new SuperObject[100];
    public Sprites npc[] = new Sprites[10];
+   public boolean speedUp = false;
+   public long timePassed;
 
    //For pausing and resuming the game
    public int gameState;
@@ -54,7 +56,7 @@ public class Pacman extends JPanel implements Runnable {
 
    public void setAssets(){
 
-      assetManager.setObject();
+      assetManager.setObject("src/res/map/maze1.txt");
       assetManager.setNPC();
       gameState = titleState;
    }
@@ -64,9 +66,12 @@ public class Pacman extends JPanel implements Runnable {
       gameThread.start();
    }
 
+
+
    @Override
    public void run() {
-
+      
+     
 
       double drawInterval = 1000000000/FPS;
       double nextDrawTime = System.nanoTime() + drawInterval;
@@ -81,7 +86,9 @@ public class Pacman extends JPanel implements Runnable {
          try {
             double remainingTime = nextDrawTime - System.nanoTime();
             remainingTime = remainingTime/1000000;
-
+            if(timePassed == 700){
+               player.speed = 2;
+            }
             if(remainingTime < 0){
                remainingTime = 0;
             }
@@ -100,6 +107,7 @@ public class Pacman extends JPanel implements Runnable {
 
       if(gameState == playState){
          player.update();
+         timePassed++;
          for(int i = 0; i < npc.length; i++){
             if(npc[i] != null){
                npc[i].update();
