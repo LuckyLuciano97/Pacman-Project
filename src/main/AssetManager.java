@@ -43,7 +43,6 @@ public class AssetManager {
                         pm.obj[z].mapY = row * pm.tileSize;
                         z++;
                         numOfDots++;
-                        System.out.println(numOfDots);
 
                     }
                     if (num == 12) {

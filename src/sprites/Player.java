@@ -132,7 +132,6 @@ public void collectObject(int i){
         case "dot":
         score += 100;
         pm.obj[i] = null; 
-        System.out.println("Score: "+score);
         if(score == pm.assetManager.numOfDots * 100){
             pm.sc.levelCompleted = true;
         }
@@ -196,8 +195,8 @@ public void npcInteraction(int i){
                 break;
         }
         g2.drawImage(image, mapX, mapY, pm.playerSize, pm.playerSize, null);
-        g2.setColor(Color.red);
-        g2.drawRect(mapX + solidArea.x, mapY + solidArea.y,solidArea.width,solidArea.height);
+        // g2.setColor(Color.red);
+        // g2.drawRect(mapX + solidArea.x, mapY + solidArea.y,solidArea.width,solidArea.height);
     } 
     
 
