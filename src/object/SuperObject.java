@@ -3,10 +3,11 @@ package object;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import javafx.scene.shape.Rectangle;
+import java.awt.Rectangle;
 import main.Pacman;
 
 public class SuperObject {
+    public String name;
     public BufferedImage image;
     public boolean collision = false;
     public int mapX, mapY;

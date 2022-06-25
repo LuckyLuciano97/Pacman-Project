@@ -2,6 +2,8 @@ package sprites;
 
 import main.Pacman;
 import main.KeyHandler;
+import main.Main;
+
 import java.awt.*;
 import java.awt.Rectangle;
 
@@ -14,21 +16,22 @@ import javax.imageio.ImageIO;
 
 public class Player extends Sprites {
 
-    Pacman pm;
     KeyHandler keyH;
+
+    public int score;
 
     public Player(Pacman pm, KeyHandler keyH) {
 
-        this.pm = pm;
+        super(pm);
         this.keyH = keyH;
 
         solidArea = new Rectangle();
-        solidArea.x = 16;
-        solidArea.y = 16;
+        solidArea.x = 32;
+        solidArea.y = 28;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 16;
-        solidArea.height = 16;
+        solidArea.width = 24;
+        solidArea.height = 20;
 
 
         setDefaultValues();
@@ -41,6 +44,7 @@ public class Player extends Sprites {
         mapY = 40;
         speed = 2;
         direction = "down";
+        
 
     }
 
@@ -78,8 +82,15 @@ public class Player extends Sprites {
         collisionOn = false;
         pm.collisionCheck.checkTile(this);
 
-        //CHECK OBJECT COLLISION 
-        // int objIndex = pm.collisionCheck.checkObject(this, true);
+        //Check for object collision
+         int objectIndex = pm.collisionCheck.checkObject(this, true);
+         collectObject(objectIndex);
+
+         //Check if npc is coliding
+         int npcIndex = pm.collisionCheck.checkSprite(this, pm.npc);
+         npcInteraction(npcIndex);
+         
+
         // IF NO COLLISION PLAYER CAN MOVE
         if (collisionOn == false) {
 
@@ -109,6 +120,38 @@ public class Player extends Sprites {
             spriteCounter = 0;
         }
     }
+
+public void collectObject(int i){
+ if(i != 999){
+
+    // pm.obj[i] = null; 
+
+    String objectName = pm.obj[i].name;
+
+    switch(objectName){
+        case "dot":
+        score += 100;
+        pm.obj[i] = null; 
+        if(score == pm.assetManager.numOfDots * 100){
+            pm.sc.levelCompleted = true;
+        }
+        break;
+        case "potion":
+        pm.obj[i] = null; 
+        speed = 4;
+        pm.timePassed = 0;
+        break;
+    }
+
+ }
+}
+
+public void npcInteraction(int i){
+ if(i != 999){
+    pm.sc.ghostAttack = true;
+}
+}
+
 
     public void draw(Graphics2D g2) {
 
@@ -152,6 +195,9 @@ public class Player extends Sprites {
                 break;
         }
         g2.drawImage(image, mapX, mapY, pm.playerSize, pm.playerSize, null);
-    }
+        // g2.setColor(Color.red);
+        // g2.drawRect(mapX + solidArea.x, mapY + solidArea.y,solidArea.width,solidArea.height);
+    } 
+    
 
 }

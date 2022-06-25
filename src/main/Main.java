@@ -17,5 +17,8 @@ public class Main {
 
         pacman.setAssets();
         pacman.startGameThread();
+
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
 }
